@@ -30,13 +30,7 @@ const submitForm = () => {
         </div>
       </form>
     </div>
-    <!-- Affichez les données récupérées par la requête de test
-    <div v-if="isLoading">Chargement...</div>
-    <div v-else-if="isError">Erreur lors du chargement des données.</div>
-    <div v-else>
-      <h2>Données récupérées:</h2>
-      <pre>{{ data }}</pre>
-    </div> -->
+    <!-- <span class="i-mdi-home"></span> -->
   </div>
 </template>
 
