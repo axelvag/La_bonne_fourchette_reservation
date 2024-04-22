@@ -9,6 +9,7 @@ const FirstName = ref('');
 const LastName = ref('');
 const Email = ref('');
 const PhoneNumber = ref('');
+const reservationMessage = ref('');
 
 // const { queryClient } = useQuery();
 
@@ -58,7 +59,7 @@ const submitFormInfo = () => {
     console.error('Veuillez remplir un horaire disponible.');
     return;
   }
-  
+  reservationMessage.value = 'Réservation envoyée';
 //   fetchData(Date.value, 'la-bonne-fourchette');
 };
 
@@ -160,7 +161,7 @@ const submitFormInfo = () => {
       </div>
 
       <div class="flex gap-x-4 sm:col-span-2">
-            <input id="candidates" name="candidates" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+            <input id="candidates" name="candidates" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-yellow-600 focus:ring-yellow-600">
         <label class="text-sm leading-6 text-gray-600" id="switch-1-label">
             En selectionnant cela vous acceptez de recevoir nos newsletters.
         </label>
@@ -170,6 +171,10 @@ const submitFormInfo = () => {
       <button type="submit" class="block w-full rounded-md bg-yellow-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-yellow-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Reserver</button>
     </div>
   </form>
+  <div v-if="reservationMessage" class="bg-green-200 text-green-800 rounded-md p-3 mt-4">
+    {{ reservationMessage }}
+  </div>
+
 </div>
 </template>
 
