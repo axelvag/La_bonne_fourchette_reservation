@@ -6,13 +6,18 @@ export const validateDateFormat = (date) => {
 };
 
 export const validateHeureFormat = (heure) => {
-    const heureRegex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+  const heureRegex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
   return heureRegex.test(heure);
 };
 
-export const  validateFirstNameFormat = (firstName) => {
-    const regex = /\d/;
-    return !regex.test(firstName);
+export const  validateNameFormat = (Name) => {
+  const regex = /\d/;
+  return !regex.test(Name);
+}
+
+export const  validatePhoneNumberFormat = (PhoneNumber) => {
+  const regex = /^[0-9]+$/;
+  return !regex.test(PhoneNumber);
 }
 
 </script>

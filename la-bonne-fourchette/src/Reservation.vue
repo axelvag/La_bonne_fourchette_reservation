@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useQuery } from '@tanstack/vue-query';
-import { validateDateFormat, validateHeureFormat, validateFirstNameFormat } from '@/utils/Form-error.vue';
+import { validateDateFormat, validateHeureFormat, validateNameFormat, validatePhoneNumberFormat } from '@/utils/Form-error.vue';
 
 const Date = ref('');
 const Heure = ref('');
 const FirstName = ref('');
 const LastName = ref('');
+const Email = ref('');
+const PhoneNumber = ref('');
 
 // const { queryClient } = useQuery();
 
@@ -26,12 +28,37 @@ const submitForm = () => {
 };
 
 const submitFormInfo = () => {
+  console.log('Date:', Date.value);
+  console.log('Heure:', Heure.value);
   console.log('Prenom:', FirstName.value);
   console.log('Nom:', LastName.value);
-  if (!validateFirstNameFormat(FirstName.value)) {
-    console.error('Format de prénom invalide. Le prénom ne doit pas contenir de chiffres.');
+  console.log('Email:', Email.value);
+  console.log('Numéro de téléphone:', PhoneNumber.value);
+  if (FirstName.value === '' || LastName.value === '' || Email.value === '' || PhoneNumber.value === '')
+  {
+    console.error('Veuillez remplir tout les champs vide.');
     return;
   }
+  if (!validateNameFormat(FirstName.value)) {
+    console.error('Format du prénom invalide. Le prénom ne doit pas contenir de chiffres.');
+    return;
+  }
+  else if (!validateNameFormat(LastName.value))
+  {
+    console.error('Format du nom invalide. Le nom ne doit pas contenir de chiffres.');
+    return;
+  }
+  else if (validatePhoneNumberFormat(PhoneNumber.value))
+  {
+    console.error('Format du numéro de téléphone invalide. Le numéro de téléphone doit contenir seulement de nombres.');
+    return;
+  }
+  else if (Date.value === '' || Heure.value === '' || !validateDateFormat(Date.value) || !validateHeureFormat(Heure.value))
+  {
+    console.error('Veuillez remplir un horaire disponible.');
+    return;
+  }
+  
 //   fetchData(Date.value, 'la-bonne-fourchette');
 };
 
@@ -65,7 +92,7 @@ const submitFormInfo = () => {
 
     <!-- Formulaire de réservation transparent -->
     <div class="glass-effect p-8 rounded-lg shadow-md">
-      <h1 class="text-2xl text-white text-center font-serif font-bold mb-4">Quand ?</h1>
+      <h1 class="text-2xl text-white text-center font-serif font-bold mb-4">Choisir une date:</h1>
       <form @submit.prevent="submitForm">
         <div class="mb-4">
           <label for="Date" class="block text-gray-700 font-bold mb-2">Date</label>
@@ -76,7 +103,7 @@ const submitFormInfo = () => {
           <input type="text" id="Heure" v-model="Heure" placeholder="XX:XX" class="w-full px-3 py-2 text-gray-500 border rounded-md focus:outline-none focus:border-blue-500">
         </div>
         <div class="text-center">
-          <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600">Date disponible ?</button>
+          <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600">Valider</button>
         </div>
       </form>
     </div>
@@ -91,8 +118,8 @@ const submitFormInfo = () => {
     <div class="relative left-1/2 -z-10 aspect-[1155/678] w-[36.125rem] max-w-none -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-40rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
   </div>
   <div class="mx-auto max-w-2xl text-center">
-    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Reservez simplement</h2>
-    <p class="mt-2 text-lg leading-8 text-gray-600">Quelques informations sur vous.</p>
+    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Informations Personnelles</h2>
+    <p class="mt-2 text-lg leading-8 text-gray-600">Dernière étape avant de diner</p>
   </div>
   <form @submit.prevent="submitFormInfo" class="mx-auto mt-16 max-w-xl sm:mt-20">
     <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
@@ -111,7 +138,7 @@ const submitFormInfo = () => {
       <div class="sm:col-span-2">
         <label for="email" class="block text-sm font-semibold leading-6 text-gray-900">Email</label>
         <div class="mt-2.5">
-          <input type="email" name="email" id="email" autocomplete="email" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          <input type="email" name="email" id="email" v-model="Email" autocomplete="email" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
         </div>
       </div>
       <div class="sm:col-span-2">
@@ -128,7 +155,7 @@ const submitFormInfo = () => {
               <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
             </svg>
           </div>
-          <input type="tel" name="phone-number" id="phone-number" autocomplete="tel" class="block w-full rounded-md border-0 px-3.5 py-2 pl-20 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          <input type="tel" name="phone-number" id="phone-number" v-model="PhoneNumber" autocomplete="tel" class="block w-full rounded-md border-0 px-3.5 py-2 pl-20 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
         </div>
       </div>
 
