@@ -10,6 +10,7 @@ const LastName = ref('');
 const Email = ref('');
 const PhoneNumber = ref('');
 const reservationMessage = ref('');
+const acceptPub = ref(false);
 
 // const { queryClient } = useQuery();
 
@@ -25,7 +26,7 @@ const submitForm = () => {
     console.error('Format de l\'heure invalide. Le format correct est HH:MM.');
     return;
   }
-    //   fetchData(Date.value, 'la-bonne-fourchette');
+  // fetchDataValider(Date.value, 'la-bonne-fourchette');
 };
 
 const submitFormInfo = () => {
@@ -35,6 +36,7 @@ const submitFormInfo = () => {
   console.log('Nom:', LastName.value);
   console.log('Email:', Email.value);
   console.log('Numéro de téléphone:', PhoneNumber.value);
+  console.log('Accepter publicité:', acceptPub.value);
   if (FirstName.value === '' || LastName.value === '' || Email.value === '' || PhoneNumber.value === '')
   {
     console.error('Veuillez remplir tout les champs vide.');
@@ -60,11 +62,17 @@ const submitFormInfo = () => {
     return;
   }
   reservationMessage.value = 'Réservation envoyée';
-//   fetchData(Date.value, 'la-bonne-fourchette');
+  // fetchDataReserver(FirstName.value,
+  //   LastName.value,
+  //   Email.value,
+  //   PhoneNumber.value,
+  //   Date.value,
+  //   Heure.value,
+  //   acceptPub.value);
 };
 
-// const fetchData = async (date, restaurant) => {
-    // console.log('Fetching data for:', date, restaurant);
+// const fetchDataValider = async (date, restaurant) => {
+//     console.log('Fetching data for:', date, restaurant);
 //   try {
 //     await queryClient.fetchQuery(['openings', date, restaurant], async () => {
 //       const response = await fetch(`https://api.test.book-eat.fr/openings?date=${date}&restaurant=${restaurant}`);
@@ -75,6 +83,44 @@ const submitFormInfo = () => {
 //     });
 //   } catch (error) {
 //     console.error('Error fetching data:', error);
+//   }
+// };
+
+// const fetchDataReserver = async (
+//   firstName: string,
+//   lastName: string,
+//   email: string,
+//   phoneNumber: string,
+//   date: string,
+//   time: string,
+//   acceptPub: boolean,
+// ) => {
+//   try {
+//     const response = await fetch('https://api.test.book-eat.fr/bookings/', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify({
+//         first_name: firstName,
+//         last_name: lastName,
+//         email: email,
+//         phone: phoneNumber,
+//         date: date,
+//         time: time,
+//         nb_person: 2,
+//         comment: '',
+//         opening: 1,
+//         acceptPub: acceptPub,
+//         acceptCGU: true,
+//       }),
+//     });
+//     if (!response.ok) {
+//       throw new Error('Failed to submit reservation');
+//     }
+//     console.log('Réservation soumise avec succès');
+//   } catch (error) {
+//     console.error('Erreur lors de la soumission de la réservation :', error);
 //   }
 // };
 
@@ -161,7 +207,7 @@ const submitFormInfo = () => {
       </div>
 
       <div class="flex gap-x-4 sm:col-span-2">
-            <input id="candidates" name="candidates" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-yellow-600 focus:ring-yellow-600">
+            <input id="acceptPub" v-model="acceptPub" name="acceptPub" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-yellow-600 focus:ring-yellow-600">
         <label class="text-sm leading-6 text-gray-600" id="switch-1-label">
             En selectionnant cela vous acceptez de recevoir nos newsletters.
         </label>
