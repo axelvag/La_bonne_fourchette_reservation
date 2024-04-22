@@ -12,11 +12,8 @@ const PhoneNumber = ref('');
 const reservationMessage = ref('');
 const acceptPub = ref(false);
 
-// const { queryClient } = useQuery();
 
 const submitForm = () => {
-  console.log('Date:', Date.value);
-  console.log('Heure:', Heure.value);
   if (!validateDateFormat(Date.value)) {
     console.error('Format de date invalide. Le format correct est YYYY-MM-DD.');
     return;
@@ -30,13 +27,6 @@ const submitForm = () => {
 };
 
 const submitFormInfo = () => {
-  console.log('Date:', Date.value);
-  console.log('Heure:', Heure.value);
-  console.log('Prenom:', FirstName.value);
-  console.log('Nom:', LastName.value);
-  console.log('Email:', Email.value);
-  console.log('Numéro de téléphone:', PhoneNumber.value);
-  console.log('Accepter publicité:', acceptPub.value);
   if (FirstName.value === '' || LastName.value === '' || Email.value === '' || PhoneNumber.value === '')
   {
     console.error('Veuillez remplir tout les champs vide.');
@@ -71,60 +61,57 @@ const submitFormInfo = () => {
   //   acceptPub.value);
 };
 
-// const fetchDataValider = async (date, restaurant) => {
-//     console.log('Fetching data for:', date, restaurant);
-//   try {
-//     await queryClient.fetchQuery(['openings', date, restaurant], async () => {
-//       const response = await fetch(`https://api.test.book-eat.fr/openings?date=${date}&restaurant=${restaurant}`);
-//       if (!response.ok) {
-//         throw new Error('Network response was not ok');
-//       }
-//       return response.json();
-//     });
-//   } catch (error) {
-//     console.error('Error fetching data:', error);
-//   }
-// };
+const fetchDataValider = async (date, restaurant) => {
+  console.log('Fetching data for:', date, restaurant);
+  try {
+    const response = await fetch(`https://api.test.book-eat.fr/openings?date=${date}&name=${restaurant}`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};
 
-// const fetchDataReserver = async (
-//   firstName: string,
-//   lastName: string,
-//   email: string,
-//   phoneNumber: string,
-//   date: string,
-//   time: string,
-//   acceptPub: boolean,
-// ) => {
-//   try {
-//     const response = await fetch('https://api.test.book-eat.fr/bookings/', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify({
-//         first_name: firstName,
-//         last_name: lastName,
-//         email: email,
-//         phone: phoneNumber,
-//         date: date,
-//         time: time,
-//         nb_person: 2,
-//         comment: '',
-//         opening: 1,
-//         acceptPub: acceptPub,
-//         acceptCGU: true,
-//       }),
-//     });
-//     if (!response.ok) {
-//       throw new Error('Failed to submit reservation');
-//     }
-//     console.log('Réservation soumise avec succès');
-//   } catch (error) {
-//     console.error('Erreur lors de la soumission de la réservation :', error);
-//   }
-// };
-
-// const queryClient = useQuery();
+const fetchDataReserver = async (
+  firstName: string,
+  lastName: string,
+  email: string,
+  phoneNumber: string,
+  date: string,
+  time: string,
+  acceptPub: boolean,
+) => {
+  try {
+    const response = await fetch('https://api.test.book-eat.fr/bookings/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        phone: phoneNumber,
+        date: date,
+        time: time,
+        nb_person: 2,
+        comment: '',
+        opening: 1,
+        acceptPub: acceptPub,
+        acceptCGU: true,
+      }),
+    });
+    if (!response.ok) {
+      throw new Error('Failed to submit reservation');
+    }
+    console.log('Réservation soumise avec succès');
+  } catch (error) {
+    console.error('Erreur lors de la soumission de la réservation :', error);
+  }
+};
 
 </script>
 
@@ -139,7 +126,7 @@ const submitFormInfo = () => {
 
     <!-- Formulaire de réservation transparent -->
     <div class="glass-effect p-8 rounded-lg shadow-md">
-      <h1 class="text-2xl text-white text-center font-serif font-bold mb-4">Choisir une date:</h1>
+      <h1 class="text-2xl text-white text-center font-serif font-bold mb-4">Choisir une date :</h1>
       <form @submit.prevent="submitForm">
         <div class="mb-4">
           <label for="Date" class="block text-gray-700 font-bold mb-2">Date</label>
@@ -147,7 +134,7 @@ const submitFormInfo = () => {
         </div>
         <div class="mb-4">
           <label for="Heure" class="block text-gray-700 font-bold mb-2">Heure</label>
-          <input type="text" id="Heure" v-model="Heure" placeholder="XX:XX" class="w-full px-3 py-2 text-gray-500 border rounded-md focus:outline-none focus:border-blue-500">
+          <input type="text" id="Heure" v-model="Heure" placeholder="HH:MM" class="w-full px-3 py-2 text-gray-500 border rounded-md focus:outline-none focus:border-blue-500">
         </div>
         <div class="text-center">
           <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600">Valider</button>
