@@ -13,3 +13,7 @@ SERVER
 <a href="https://nodejs.org/en" target="_blank" rel="noreferrer"> <img src="https://cdn.worldvectorlogo.com/logos/nodejs-icon.svg" alt="c" width="40" height="40"/> </a>
 
 ![final](https://github.com/axelvag/La_bonne_fourchette_reservation/assets/110343366/87b38f0d-f638-4830-ba0f-1ca2a97ba76f)
+
+## SUBJECT
+
+Develop the basics of a reservation site for a restaurant (only the part that concerns reservations) with an intuitive and responsive interface.
